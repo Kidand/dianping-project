@@ -1,2 +1,20 @@
 server:
   port: 8010
+
+mybatis:
+  mapper-locations: classpath:mapping/*.xml
+
+
+#配置数据库连接数据源
+spring:
+  datasource:
+    name: dianpingdb
+    url: jdbc:mysql://127.0.0.1:3306/dianpingdb?useUnicode=true&characterEncoding=UTF-8
+    username: root
+    password: root
+    #使用Druid做连接池管理
+    type: com.alibaba.druid.pool.DruidDataSource
+    driver-class-name: com.mysql.jdbc.Driver
+
+
+
