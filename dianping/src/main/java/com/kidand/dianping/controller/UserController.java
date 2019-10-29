@@ -1,5 +1,9 @@
 package com.kidand.dianping.controller;
 
+import com.kidand.dianping.common.BusinessException;
+import com.kidand.dianping.common.CommonError;
+import com.kidand.dianping.common.CommonRes;
+import com.kidand.dianping.common.EmBusinessError;
 import com.kidand.dianping.model.UserModel;
 import com.kidand.dianping.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +26,13 @@ public class UserController {
 
     @RequestMapping("/get")
     @ResponseBody
-    public UserModel getUser(@RequestParam(name="id")Integer id){
-        return userService.getUser(id);
+    public CommonRes getUser(@RequestParam(name="id")Integer id) throws BusinessException {
+        UserModel userModel =  userService.getUser(id);
+        if(userModel==null){
+            //return CommonRes.create(new CommonError(EmBusinessError.NO_OBJECT_FOUND),"fail");
+            throw new BusinessException(EmBusinessError.NO_OBJECT_FOUND);
+        }else{
+            return CommonRes.create(userModel);
+        }
     }
 }
