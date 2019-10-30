@@ -17,8 +17,16 @@ spring:
     driver-class-name: com.mysql.jdbc.Driver
   #拒绝默认的404处理方式
   resources:
-    add-mappings: false
+    #add-mapping为true表示如果所有的controller都没有命中，则使用默认的静态资源处理器做匹配
+    add-mappings: true
   #使用mvc
   mvc:
     throw-exception-if-no-handler-found: true
 
+    #接入前端静态资源页面
+    static-path-pattern: /static/**
+
+  #thymeleaf相关的配置
+  thymeleaf:
+    prefix: classpath:/templates
+    suffix: html
