@@ -53,4 +53,6 @@ public interface UserModelMapper {
      * @mbg.generated Tue Oct 29 17:35:58 CST 2019
      */
     int updateByPrimaryKey(UserModel record);
+
+    Integer countAllUser();
 }

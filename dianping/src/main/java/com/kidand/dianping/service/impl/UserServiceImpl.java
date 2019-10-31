@@ -53,6 +53,11 @@ public class UserServiceImpl implements UserService {
         return userModel;
     }
 
+    @Override
+    public Integer countAllUser() {
+        return userModelMapper.countAllUser();
+    }
+
     private String encodeByMd5(String str) throws NoSuchAlgorithmException, UnsupportedEncodingException {
         //确认计算方法MD5
         MessageDigest messageDigest = MessageDigest.getInstance("MD5");
