@@ -105,7 +105,7 @@ License: You must have a valid license purchased only from themeforest(the above
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr th:each="seller:${data}">
+                                <tr th:each="seller:${data.list}">
                                     <td th:text="${seller.id}"></td>
                                     <td th:text="${seller.name}"></td>
                                     <td th:text="${seller.remarkScore}"></td>

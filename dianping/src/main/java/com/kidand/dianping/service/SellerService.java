@@ -1,5 +1,6 @@
 package com.kidand.dianping.service;
 
+import com.kidand.dianping.common.BusinessException;
 import com.kidand.dianping.model.SellerModel;
 
 import java.util.List;
@@ -12,5 +13,5 @@ public interface SellerService {
 
     List<SellerModel> selectAll();
 
-    SellerModel changestatus(Integer id, Integer disabledFlag);
+    SellerModel changestatus(Integer id, Integer disabledFlag) throws BusinessException;
 }
