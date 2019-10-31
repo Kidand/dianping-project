@@ -35,12 +35,12 @@ public class ControllerAspect {
         //判断当前管理员是否登陆
         String email = (String) httpServletRequest.getSession().getAttribute(AdminController.CURRENT_ADMIN_SESSION);
         if (email == null) {
-            if(adminPermission.produceType().equals("text/html")){
+            if (adminPermission.produceType().equals("text/html")) {
                 httpServletResponse.sendRedirect("/admin/admin/loginpage");
                 return null;
-            }else{
+            } else {
                 CommonError commonError = new CommonError(EmBusinessError.ADMIN_SHOULD_LOGIN);
-                return CommonRes.create(commonError,"fail");
+                return CommonRes.create(commonError, "fail");
             }
         } else {
             Object resultObject = joinPoint.proceed();

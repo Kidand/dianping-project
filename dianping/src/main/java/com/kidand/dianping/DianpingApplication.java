@@ -10,6 +10,6 @@ import org.springframework.context.annotation.EnableAspectJAutoProxy;
 @EnableAspectJAutoProxy(proxyTargetClass = true)
 public class DianpingApplication {
     public static void main(String[] args) {
-        SpringApplication.run(DianpingApplication.class,args);
+        SpringApplication.run(DianpingApplication.class, args);
     }
 }
