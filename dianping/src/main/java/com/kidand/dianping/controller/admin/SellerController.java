@@ -67,20 +67,20 @@ public class SellerController {
     }
 
     //禁用
-    @RequestMapping(value = "down", method = RequestMethod.POST)
+    @RequestMapping(value="down",method = RequestMethod.POST)
     @AdminPermission
     @ResponseBody
-    public CommonRes down(@RequestParam(value = "id") Integer id) throws BusinessException {
-        SellerModel sellerModel = sellerService.changestatus(id, 1);
+    public CommonRes down(@RequestParam(value="id")Integer id) throws BusinessException {
+        SellerModel sellerModel = sellerService.changeStatus(id,1);
         return CommonRes.create(sellerModel);
     }
 
     //启用
-    @RequestMapping(value = "down", method = RequestMethod.POST)
+    @RequestMapping(value="up",method = RequestMethod.POST)
     @AdminPermission
     @ResponseBody
-    public CommonRes up(@RequestParam(value = "id") Integer id) throws BusinessException {
-        SellerModel sellerModel = sellerService.changestatus(id, 0);
+    public CommonRes up(@RequestParam(value="id")Integer id) throws BusinessException {
+        SellerModel sellerModel = sellerService.changeStatus(id,0);
         return CommonRes.create(sellerModel);
     }
 

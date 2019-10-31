@@ -42,7 +42,7 @@ public class SellerServiceImpl implements SellerService {
     }
 
     @Override
-    public SellerModel changestatus(Integer id, Integer disabledFlag) throws BusinessException {
+    public SellerModel changeStatus(Integer id, Integer disabledFlag) throws BusinessException {
         SellerModel sellerModel = get(id);
         if(sellerModel == null){
             throw new BusinessException(EmBusinessError.PARAMETER_VALIDATION_ERROR);
