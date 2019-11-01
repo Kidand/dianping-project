@@ -9,11 +9,11 @@ public class CommonRes {
     private Object data;
 
     //定义一个通用的创建返回对象的方法
-    public static CommonRes create(Object result){
-        return CommonRes.create(result,"success");
+    public static CommonRes create(Object result) {
+        return CommonRes.create(result, "success");
     }
 
-    public static CommonRes create(Object result,String status){
+    public static CommonRes create(Object result, String status) {
         CommonRes commonRes = new CommonRes();
         commonRes.setStatus(status);
         commonRes.setData(result);

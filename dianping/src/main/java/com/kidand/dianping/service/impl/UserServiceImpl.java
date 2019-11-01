@@ -35,9 +35,9 @@ public class UserServiceImpl implements UserService {
         registerUser.setCreatedAt(new Date());
         registerUser.setUpdatedAt(new Date());
 
-        try{
+        try {
             userModelMapper.insertSelective(registerUser);
-        }catch(DuplicateKeyException ex){
+        } catch (DuplicateKeyException ex) {
             throw new BusinessException(EmBusinessError.REGISTER_DUP_FAIL);
         }
 
@@ -46,8 +46,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserModel login(String telphone, String password) throws UnsupportedEncodingException, NoSuchAlgorithmException, BusinessException {
-        UserModel userModel = userModelMapper.selectByTelphoneAndPassword(telphone,encodeByMd5(password));
-        if(userModel == null){
+        UserModel userModel = userModelMapper.selectByTelphoneAndPassword(telphone, encodeByMd5(password));
+        if (userModel == null) {
             throw new BusinessException(EmBusinessError.LOGIN_FAIL);
         }
         return userModel;

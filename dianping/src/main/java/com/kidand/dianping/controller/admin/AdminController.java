@@ -41,9 +41,9 @@ public class AdminController {
     @AdminPermission
     public ModelAndView index() {
         ModelAndView modelAndView = new ModelAndView("/admin/admin/index");
-        modelAndView.addObject("userCount",userService.countAllUser());
-        modelAndView.addObject("CONTROLLER_NAME","admin");
-        modelAndView.addObject("ACTION_NAME","index");
+        modelAndView.addObject("userCount", userService.countAllUser());
+        modelAndView.addObject("CONTROLLER_NAME", "admin");
+        modelAndView.addObject("ACTION_NAME", "index");
         return modelAndView;
     }
 
