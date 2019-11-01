@@ -207,7 +207,17 @@
 
 
     <div id="main" style="padding:0px;width:100%;height:100%;border:0px;">
-
+        <!-- 1. 头部swipe -->
+        <div id='slider' class='swipe'>
+            <div class='swipe-wrap'>
+                <div class="swipe-box">
+                    <div class="sliderow" id="slideRow1">
+                    </div>
+                    <div class="sliderow" id="slideRow2">
+                    </div>
+                </div>
+            </div>
+        </div>
 
 
     </div>
@@ -241,11 +251,20 @@
 
 <script type="text/javascript">
 
+
+    window.onload = function() {
+
+        var slider =
+            Swipe(document.getElementById('slider'), {
+                auto: 1000000,
+                continuous: true,
+                callback: function(pos) {
+                }
+            });
+    }
+
     jQuery(document).ready(function() {
         var g_currentUser = null;
-
-
-
 
 
         //获取当前用户的信息
@@ -273,6 +292,30 @@
                 alert("网络请求失败，原因为"+data.responseText);
             }
         });
+
+        $.ajax({
+            type : "GET",
+            url : "/category/list",
+            success : function(data){
+                if(data.status == 'success'){
+                    var dataList = data.data;
+                    for(var i = 0; i < dataList.length; i++){
+                        var content = $('<div class="slidecol"><img src="'+dataList[i].iconUrl+'" alt=""><div class="">'+dataList[i].name+'</div></div>');
+                        if(i <= 3){
+                            $("#slideRow1").append(content);
+                        }else{
+                            $("#slideRow2").append(content);
+                        }
+                    }
+                }else{
+                    alert("获取品类信息失败，原因为"+data.data.errMsg);
+                }
+            },
+            error : function(data){
+                alert("获取品类信息失败，原因为"+data.responseText);
+            }
+        });
+
 
 
         $("#rightTitle").on("click",function(){
