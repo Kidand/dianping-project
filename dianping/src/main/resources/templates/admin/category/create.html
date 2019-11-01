@@ -72,46 +72,49 @@ License: You must have a valid license purchased only from themeforest(the above
 <div class="page-container">
     <div th:replace="admin/common/sidebar :: sidebar"></div>
     <!-- BEGIN CONTENT -->
-    <div class="page-content-wrapper">
-        <div class="page-content">
-            <h3 class="page-title">创建品类</h3>
-            <div class="portlet-body form">
-                <!-- BEGIN FORM-->
-                <form action="/admin/category/create" id="create" class="form-horizontal form-row-seperated" method="post">
-                    <div class="form-body">
-                        <div class="form-group">
-                            <label class="col-md-3 control-label">品类名<span class="required" aria-required="true"></span></label>
-                            <div class="col-md-6">
-                                <input type="text" name="name" id="name" value="" class="form-control" />
+    <div class="page-container">
+        <div th:replace="admin/common/sidebar :: sidebar"></div>
+        <!-- BEGIN CONTENT -->
+        <div class="page-content-wrapper">
+            <div class="page-content">
+                <h3 class="page-title">创建品类</h3>
+                <div class="portlet-body form">
+                    <!-- BEGIN FORM-->
+                    <form action="/admin/category/create" id="create" class="form-horizontal form-row-seperated" method="post">
+                        <div class="form-body">
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">品类名<span class="required" aria-required="true"></span></label>
+                                <div class="col-md-6">
+                                    <input type="text" name="name" id="name" value="" class="form-control" />
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="form-body">
-                        <div class="form-group">
-                            <label class="col-md-3 control-label">图片url路径<span class="required" aria-required="true"></span></label>
-                            <div class="col-md-6">
-                                <input type="text" name="iconUrl" id="iconUrl" value="" class="form-control" />
+                        <div class="form-body">
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">图片url路径<span class="required" aria-required="true"></span></label>
+                                <div class="col-md-6">
+                                    <input type="text" name="iconUrl" id="iconUrl" value="" class="form-control" />
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="form-body">
-                        <div class="form-group">
-                            <label class="col-md-3 control-label">权重<span class="required" aria-required="true"></span></label>
-                            <div class="col-md-6">
-                                <input type="text" name="sort" id="sort" value="" class="form-control" />
+                        <div class="form-body">
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">权重<span class="required" aria-required="true"></span></label>
+                                <div class="col-md-6">
+                                    <input type="text" name="sort" id="sort" value="" class="form-control" />
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="form-actions fluid nobg">
-                        <div class="col-md-offset-3 col-md-9">
-                            <button type="submit" class="btn yellow-lemon" id="saveButton"><i class="fa fa-check"></i> 创建 </button>
-                            <button type="button" class="btn default" style="margin-left:12px;" onclick = "javascript:history.go(-1)"> 取消 </button>
+                        <div class="form-actions fluid nobg">
+                            <div class="col-md-offset-3 col-md-9">
+                                <button type="submit" class="btn yellow-lemon" id="saveButton"><i class="fa fa-check"></i> 创建 </button>
+                                <button type="button" class="btn default" style="margin-left:12px;" onclick = "javascript:history.go(-1)"> 取消 </button>
+                            </div>
                         </div>
-                    </div>
-                </form>
+                    </form>
+                </div>
             </div>
         </div>
-    </div>
     <!-- END CONTENT -->
 </div>
 <!-- END CONTAINER -->
