@@ -3,6 +3,9 @@ package com.kidand.dianping.controller.admin;
 import com.kidand.dianping.common.AdminPermission;
 import com.kidand.dianping.common.BusinessException;
 import com.kidand.dianping.common.EmBusinessError;
+import com.kidand.dianping.service.CategoryService;
+import com.kidand.dianping.service.SellerService;
+import com.kidand.dianping.service.ShopService;
 import com.kidand.dianping.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -35,6 +38,15 @@ public class AdminController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private CategoryService categoryService;
+
+    @Autowired
+    private ShopService shopService;
+
+    @Autowired
+    private SellerService sellerService;
+
     public static final String CURRENT_ADMIN_SESSION = "currentAdminSession";
 
     @RequestMapping("/index")
@@ -42,6 +54,9 @@ public class AdminController {
     public ModelAndView index() {
         ModelAndView modelAndView = new ModelAndView("/admin/admin/index");
         modelAndView.addObject("userCount", userService.countAllUser());
+        modelAndView.addObject("shopCount", shopService.countAllShop());
+        modelAndView.addObject("sellerCount", sellerService.countAllSeller());
+        modelAndView.addObject("categoryCount", categoryService.countAllCategory());
         modelAndView.addObject("CONTROLLER_NAME", "admin");
         modelAndView.addObject("ACTION_NAME", "index");
         return modelAndView;

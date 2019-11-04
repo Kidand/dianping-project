@@ -79,4 +79,9 @@ public class ShopServiceImpl implements ShopService {
         });
         return shopModelList;
     }
+
+    @Override
+    public Integer countAllShop() {
+        return shopModelMapper.countAllShop();
+    }
 }
