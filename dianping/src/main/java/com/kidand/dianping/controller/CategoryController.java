@@ -19,7 +19,7 @@ public class CategoryController {
 
     @ResponseBody
     @RequestMapping("/list")
-    public CommonRes list(){
+    public CommonRes list() {
         List<CategoryModel> categoryModelList = categoryService.selectAll();
         return CommonRes.create(categoryModelList);
     }

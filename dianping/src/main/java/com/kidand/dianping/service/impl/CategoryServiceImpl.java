@@ -25,9 +25,9 @@ public class CategoryServiceImpl implements CategoryService {
         categoryModel.setCreatedAt(new Date());
         categoryModel.setUpdatedAt(new Date());
 
-        try{
+        try {
             categoryModelMapper.insertSelective(categoryModel);
-        }catch(DuplicateKeyException ex){
+        } catch (DuplicateKeyException ex) {
             throw new BusinessException(EmBusinessError.CATEGORY_NAME_DUPLICATED);
         }
 
