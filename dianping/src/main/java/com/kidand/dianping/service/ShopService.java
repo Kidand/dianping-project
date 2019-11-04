@@ -3,6 +3,7 @@ package com.kidand.dianping.service;
 import com.kidand.dianping.common.BusinessException;
 import com.kidand.dianping.model.ShopModel;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 public interface ShopService {
@@ -11,6 +12,8 @@ public interface ShopService {
     ShopModel get(Integer id);
 
     List<ShopModel> selectAll();
+
+    List<ShopModel> recommend(BigDecimal longitude,BigDecimal latitude);
 
     Integer countAllShop();
 }

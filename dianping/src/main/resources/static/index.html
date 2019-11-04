@@ -201,6 +201,10 @@
     <div id="firstHeader" class="titlebar activebar">
         <div class="topbar">
             <div class="citylist fl" id="citylist" tapmode="">上海<img src="./image/title_home_arrow_down_normal.png" alt="" class="citylistarrow"></div>
+
+            <input type="hidden" id="longitude" value="" name="longitude"/>
+            <input type="hidden" id="latitude" value="" name="latitude"/>
+
             <span id="rightTitle" style="font-size:16px;color:white;float:right;padding-top:12px;">登录</span>
         </div>
     </div>
@@ -217,6 +221,11 @@
                     </div>
                 </div>
             </div>
+        </div>
+
+        <div class="guesstitle" id="guess">猜你喜欢<img src="/static/image/home_competitive_icon.png" alt=""></div>
+        <div class="home-tuan-list" id="tuanList">
+
         </div>
 
 
@@ -248,6 +257,7 @@
 <script type="text/javascript" src="/static/script/jquery.min.js"></script>
 <script type="text/javascript" src="/static/script/bootstrap.js"></script>
 
+<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=iIqpR6pDy2MO0svEBhN5xljTMtoWp83m"></script>
 
 <script type="text/javascript">
 
@@ -263,8 +273,65 @@
             });
     }
 
+    getFloat = function (number, n) {
+        n = n ? parseInt(n) : 0;
+        if (n <= 0) return Math.round(number);
+        number = Math.round(number * Math.pow(10, n)) / Math.pow(10, n);
+        return number;
+    };
+
     jQuery(document).ready(function() {
         var g_currentUser = null;
+
+
+        var geolocation = new BMap.Geolocation();
+        geolocation.getCurrentPosition(function(r){
+            if(this.getStatus() == BMAP_STATUS_SUCCESS){
+                var longitude = r.point.lng;
+                var latitude = r.point.lat;
+                $("#longitude").val(longitude);
+                $("#latitude").val(latitude);
+
+                $.ajax({
+                    type : "GET",
+                    url : "/shop/recommend?longitude="+longitude+"&latitude="+latitude,
+                    success : function(data){
+                        if(data.status == 'success'){
+                            var dataList = data.data;
+                            for(var i = 0; i < dataList.length; i++){
+                                var distance = dataList[i].distance;
+                                var distanceStr = "0m";
+                                if(distance >= 1000){
+                                    distanceStr = getFloat(distance / 1000,1) + " km";
+                                }else{
+                                    distanceStr = distance + " m";
+                                }
+                                var content = $('<a href="" class="item Fix hightitem">'+
+                                    '<div class="cnt">'+
+                                    '<img class="pic" src="'+dataList[i].iconUrl+'"/>'+
+                                    '<div class="wrap">'+
+                                    '<div class="wrap2">'+
+                                    '<div class="content">'+
+                                    '<div class="shopname">'+dataList[i].name+'</div><span class="distance">'+distanceStr+'</span>'+
+                                    '<div class="title">'+dataList[i].tags+'</div>'+
+                                    '<div class="info">'+
+                                    '<span class="symbol">¥</span>'+
+                                    '<span class="price">'+dataList[i].pricePerMan+'</span></div> </div> </div> </div> </div></a>');
+                                $("#tuanList").append(content);
+                            }
+                        }else{
+                            alert("获取门店信息失败，原因为"+data.data.errMsg);
+                        }
+                    },
+                    error : function(data){
+                        alert("获取门店信息失败，原因为"+data.responseText);
+                    }
+                });
+            }
+            else {
+                alert('failed'+this.getStatus());
+            }
+        },{enableHighAccuracy: true});
 
 
         //获取当前用户的信息

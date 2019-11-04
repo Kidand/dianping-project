@@ -1,7 +1,9 @@
 package com.kidand.dianping.dal;
 
 import com.kidand.dianping.model.ShopModel;
+import org.apache.ibatis.annotations.Param;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 public interface ShopModelMapper {
@@ -56,4 +58,6 @@ public interface ShopModelMapper {
      * @mbg.generated Sat Nov 02 08:55:42 CST 2019
      */
     int updateByPrimaryKey(ShopModel record);
+
+    List<ShopModel> recommend(@Param("longitude")BigDecimal longitude, @Param("latitude")BigDecimal latitude);
 }
