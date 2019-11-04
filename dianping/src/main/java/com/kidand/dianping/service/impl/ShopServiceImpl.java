@@ -95,4 +95,14 @@ public class ShopServiceImpl implements ShopService {
     public Integer countAllShop() {
         return shopModelMapper.countAllShop();
     }
+
+    @Override
+    public List<ShopModel> search(BigDecimal longitude, BigDecimal latitude, String keyword, Integer orderby, Integer categoryId) {
+        List<ShopModel> shopModelList = shopModelMapper.search(longitude,latitude,keyword,orderby,categoryId);
+        shopModelList.forEach(shopModel -> {
+            shopModel.setSellerModel(sellerService.get(shopModel.getSellerId()));
+            shopModel.setCategoryModel(categoryService.get(shopModel.getCategoryId()));
+        });
+        return shopModelList;
+    }
 }
