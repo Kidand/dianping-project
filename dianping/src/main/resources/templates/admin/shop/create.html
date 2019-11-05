@@ -204,7 +204,7 @@ License: You must have a valid license purchased only from themeforest(the above
         $("#analyze").on("click",function(){
             $.ajax({
                 type : "POST",
-                url : "http://api.map.baidu.com/geocoder/v2/",
+                url : "http://api.map.baidu.com/geocoding/v3/",
                 data:"address="+encodeURIComponent($("#address").val())+"&output=json&ak=9qdDkSo6uxfDG227mj7exeqoXrGSrNIf",
                 dataType:"jsonp",
                 jsonp:"callback",
