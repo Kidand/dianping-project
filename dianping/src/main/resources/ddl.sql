@@ -36,7 +36,7 @@ CREATE TABLE `dianpingdb`.`shop`  (
   `created_at` datetime(0) NOT NULL ON UPDATE CURRENT_TIMESTAMP(0),
   `updated_at` datetime(0) NOT NULL ON UPDATE CURRENT_TIMESTAMP(0),
   `name` varchar(80) NOT NULL DEFAULT '',
-  `remark_score` decimal(2, 2) NOT NULL DEFAULT 0,
+  `remark_score` decimal(2, 1) NOT NULL DEFAULT 0,
   `price_per_man` int(0) NOT NULL DEFAULT 0,
   `latitude` decimal(10, 6) NOT NULL DEFAULT 0,
   `longitude` decimal(10, 6) NOT NULL DEFAULT 0,
