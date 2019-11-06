@@ -1,0 +1,32 @@
+#admin官方用用户名和密码
+admin:
+  email: 1
+  encryptPassword: 4QrcOUm6Wau+VuBX8g+IPg==
+mybatis:
+  mapperLocations: classpath:mapping/*.xml
+server:
+  port: 8010
+
+#配置数据库连接数据源
+spring:
+  datasource:
+    driverClassName: com.mysql.jdbc.Driver
+    name: dianpingdb
+    #使用Druid做连接池管理
+    type: com.alibaba.druid.pool.DruidDataSource
+    url: jdbc:mysql://127.0.0.1:3306/dianpingdb?useUnicode=true&characterEncoding=UTF-8&useSSL=false
+    username: root
+    password: root
+  #使用mvc
+  mvc:
+    #接入前端静态资源页面
+    static-path-pattern: /static/**
+    throw-exception-if-no-handler-found: true
+  #拒绝默认的404处理方式
+  resources:
+    #add-mapping为true表示如果所有的controller都没有命中，则使用默认的静态资源处理器做匹配
+    add-mappings: true
+  #thymeleaf相关的配置
+  thymeleaf:
+    prefix: classpath:/templates/
+    suffix: .html
