@@ -32,25 +32,25 @@ public class ShopController {
     //推荐服务V1.0
     @RequestMapping("/recommend")
     @ResponseBody
-    public CommonRes recommend(@RequestParam(name="longitude")BigDecimal longitude,
-                               @RequestParam(name = "latitude")BigDecimal latitude) throws BusinessException {
-        if (longitude == null || latitude == null){
+    public CommonRes recommend(@RequestParam(name = "longitude") BigDecimal longitude,
+                               @RequestParam(name = "latitude") BigDecimal latitude) throws BusinessException {
+        if (longitude == null || latitude == null) {
             throw new BusinessException(EmBusinessError.PARAMETER_VALIDATION_ERROR);
         }
 
-        List<ShopModel> shopModelist = shopService.recommend(longitude,latitude);
+        List<ShopModel> shopModelist = shopService.recommend(longitude, latitude);
         return CommonRes.create(shopModelist);
     }
 
     //搜索服务V1.0
     @RequestMapping("/search")
     @ResponseBody
-    public CommonRes search(@RequestParam(name="longitude")BigDecimal longitude,
-                            @RequestParam(name = "latitude")BigDecimal latitude,
-                            @RequestParam(name = "keyword")String keyword,
-                            @RequestParam(name = "orderby",required = false)Integer orderby,
-                            @RequestParam(name = "categoryId",required = false)Integer categoryId,
-                            @RequestParam(name = "tags", required = false)String tags) throws BusinessException {
+    public CommonRes search(@RequestParam(name = "longitude") BigDecimal longitude,
+                            @RequestParam(name = "latitude") BigDecimal latitude,
+                            @RequestParam(name = "keyword") String keyword,
+                            @RequestParam(name = "orderby", required = false) Integer orderby,
+                            @RequestParam(name = "categoryId", required = false) Integer categoryId,
+                            @RequestParam(name = "tags", required = false) String tags) throws BusinessException {
         if (StringUtils.isEmpty(keyword) || longitude == null || latitude == null) {
             throw new BusinessException(EmBusinessError.PARAMETER_VALIDATION_ERROR);
         }
@@ -59,7 +59,7 @@ public class ShopController {
 
         List<CategoryModel> categoryModelList = categoryService.selectAll();
 
-        List<Map<String, Object>> tagsAggregation = shopService.searchGroupByTags(keyword,categoryId,tags);
+        List<Map<String, Object>> tagsAggregation = shopService.searchGroupByTags(keyword, categoryId, tags);
         Map<String, Object> resMap = new HashMap<>();
         resMap.put("shop", shopModelList);
         resMap.put("category", categoryModelList);

@@ -16,7 +16,7 @@ public interface ShopService {
 
     List<ShopModel> recommend(BigDecimal longitude, BigDecimal latitude);
 
-    List<Map<String, Object>> searchGroupByTags (String keyword, Integer categoryId, String tags);
+    List<Map<String, Object>> searchGroupByTags(String keyword, Integer categoryId, String tags);
 
     Integer countAllShop();
 

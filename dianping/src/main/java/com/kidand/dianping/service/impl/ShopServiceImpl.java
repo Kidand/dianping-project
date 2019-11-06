@@ -84,7 +84,7 @@ public class ShopServiceImpl implements ShopService {
 
     @Override
     public List<ShopModel> recommend(BigDecimal longitude, BigDecimal latitude) {
-        List<ShopModel> shopModelList = shopModelMapper.recommend(longitude,latitude);
+        List<ShopModel> shopModelList = shopModelMapper.recommend(longitude, latitude);
         shopModelList.forEach(shopModel -> {
             shopModel.setSellerModel(sellerService.get(shopModel.getSellerId()));
             shopModel.setCategoryModel(categoryService.get(shopModel.getCategoryId()));
@@ -94,7 +94,7 @@ public class ShopServiceImpl implements ShopService {
 
     @Override
     public List<Map<String, Object>> searchGroupByTags(String keyword, Integer categoryId, String tags) {
-        return shopModelMapper.searchGroupByTags(keyword,categoryId,tags);
+        return shopModelMapper.searchGroupByTags(keyword, categoryId, tags);
     }
 
     @Override
@@ -104,7 +104,7 @@ public class ShopServiceImpl implements ShopService {
 
     @Override
     public List<ShopModel> search(BigDecimal longitude, BigDecimal latitude, String keyword, Integer orderby, Integer categoryId, String tags) {
-        List<ShopModel> shopModelList = shopModelMapper.search(longitude,latitude,keyword,orderby,categoryId,tags);
+        List<ShopModel> shopModelList = shopModelMapper.search(longitude, latitude, keyword, orderby, categoryId, tags);
         shopModelList.forEach(shopModel -> {
             shopModel.setSellerModel(sellerService.get(shopModel.getSellerId()));
             shopModel.setCategoryModel(categoryService.get(shopModel.getCategoryId()));
