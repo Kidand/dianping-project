@@ -9,14 +9,24 @@ import com.kidand.dianping.model.ShopModel;
 import com.kidand.dianping.service.CategoryService;
 import com.kidand.dianping.service.SellerService;
 import com.kidand.dianping.service.ShopService;
+import org.elasticsearch.action.search.SearchRequest;
+import org.elasticsearch.action.search.SearchResponse;
+import org.elasticsearch.client.RequestOptions;
+import org.elasticsearch.client.RestHighLevelClient;
+import org.elasticsearch.common.unit.TimeValue;
+import org.elasticsearch.index.query.QueryBuilder;
+import org.elasticsearch.index.query.QueryBuilders;
+import org.elasticsearch.search.SearchHit;
+import org.elasticsearch.search.builder.SearchSourceBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.IOException;
 import java.math.BigDecimal;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 
 @Service
 public class ShopServiceImpl implements ShopService {
@@ -29,6 +39,9 @@ public class ShopServiceImpl implements ShopService {
 
     @Autowired
     private SellerService sellerService;
+
+    @Autowired
+    private RestHighLevelClient highLevelClient;
 
     @Override
     @Transactional
@@ -110,6 +123,37 @@ public class ShopServiceImpl implements ShopService {
             shopModel.setCategoryModel(categoryService.get(shopModel.getCategoryId()));
         });
         return shopModelList;
+    }
+
+    @Override
+    public Map<String, Object> searchES(BigDecimal longitude, BigDecimal latitude, String keyword, Integer orderby, Integer categoryId, String tags) throws IOException {
+        Map<String, Object> result = new HashMap<>();
+
+        SearchRequest searchRequest = new SearchRequest("shop");
+        SearchSourceBuilder sourceBuilder = new SearchSourceBuilder();
+        //查询
+        sourceBuilder.query(QueryBuilders.matchQuery("name", keyword));
+        //等待时间
+        sourceBuilder.timeout(new TimeValue(60, TimeUnit.SECONDS));
+        searchRequest.source(sourceBuilder);
+
+        //拿到hits内容
+        SearchResponse searchResponse = highLevelClient.search(searchRequest, RequestOptions.DEFAULT);
+        SearchHit[] hits = searchResponse.getHits().getHits();
+
+        //用来存id
+        List<Integer> shopIdList = new ArrayList<>();
+
+        for (SearchHit hit : hits) {
+            shopIdList.add(new Integer(hit.getSourceAsMap().get("id").toString()));
+        }
+
+        List<ShopModel> shopModelList = shopIdList.stream().map(id->{
+            return get(id);
+        }).collect(Collectors.toList());
+
+        result.put("shop", shopModelList);
+        return result;
     }
 
 }
