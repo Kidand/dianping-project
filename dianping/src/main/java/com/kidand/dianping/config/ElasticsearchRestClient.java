@@ -27,7 +27,7 @@ public class ElasticsearchRestClient {
     @Value("${elasticsearch.ip}")
     String ipAddress;
 
-    @Bean(name="heighLevelClient")
+    @Bean(name="highLevelClient")
     public RestHighLevelClient highLevelClient(){
         String[] address = ipAddress.split(":");
         String ip = address[0];
