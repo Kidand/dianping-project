@@ -272,6 +272,16 @@ public class ShopServiceImpl implements ShopService {
         jsonRequestObj.getJSONObject("query").getJSONObject("function_score").getJSONObject("query").getJSONObject("bool")
                 .getJSONArray("must").getJSONObject(queryIndex).getJSONObject("term").put("seller_disabled_flag", 0);
 
+        if(tags != null){
+            queryIndex++;
+            jsonRequestObj.getJSONObject("query").getJSONObject("function_score").getJSONObject("query").getJSONObject("bool")
+                    .getJSONArray("must").add(new JSONObject());
+            jsonRequestObj.getJSONObject("query").getJSONObject("function_score").getJSONObject("query").getJSONObject("bool")
+                    .getJSONArray("must").getJSONObject(queryIndex).put("term",new JSONObject());
+            jsonRequestObj.getJSONObject("query").getJSONObject("function_score").getJSONObject("query").getJSONObject("bool")
+                    .getJSONArray("must").getJSONObject(queryIndex).getJSONObject("term").put("tags",tags);
+        }
+
         if (categoryId != null) {
             queryIndex++;
             jsonRequestObj.getJSONObject("query").getJSONObject("function_score").getJSONObject("query").getJSONObject("bool")
@@ -336,6 +346,13 @@ public class ShopServiceImpl implements ShopService {
             jsonRequestObj.getJSONArray("sort").getJSONObject(0).getJSONObject("_score").put("order","asc");
         }
 
+        //聚合字段
+        jsonRequestObj.put("aggs",new JSONObject());
+        jsonRequestObj.getJSONObject("aggs").put("group_by_tags",new JSONObject());
+        jsonRequestObj.getJSONObject("aggs").getJSONObject("group_by_tags").put("terms",new JSONObject());
+        jsonRequestObj.getJSONObject("aggs").getJSONObject("group_by_tags").getJSONObject("terms").put("field","tags");
+
+
         String reqJson = jsonRequestObj.toJSONString();
 
             System.out.println(reqJson);
@@ -358,6 +375,18 @@ public class ShopServiceImpl implements ShopService {
             shopModel.setDistance(distance.multiply(new BigDecimal(1000).setScale(0, BigDecimal.ROUND_CEILING)).intValue());
             shopModelList.add(shopModel);
         }
+
+        List<Map> tagsList = new ArrayList<>();
+
+        JSONArray tagsJsonArray = jsonObject.getJSONObject("aggregations").getJSONObject("group_by_tags").getJSONArray("buckets");
+        for(int i = 0; i < tagsJsonArray.size();i++){
+            JSONObject jsonObj = tagsJsonArray.getJSONObject(i);
+            Map<String,Object> tagMap = new HashMap<>();
+            tagMap.put("tags",jsonObj.getString("key"));
+            tagMap.put("num",jsonObj.getInteger("doc_count"));
+            tagsList.add(tagMap);
+        }
+        result.put("tags",tagsList);
 
         result.put("shop", shopModelList);
         return result;

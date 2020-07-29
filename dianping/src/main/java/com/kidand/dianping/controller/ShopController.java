@@ -56,14 +56,15 @@ public class ShopController {
             throw new BusinessException(EmBusinessError.PARAMETER_VALIDATION_ERROR);
         }
 
-        List<ShopModel> shopModelList = (List<ShopModel>) shopService.searchES(longitude, latitude, keyword, orderby, categoryId, tags).get("shop");
 
+        Map<String, Object> result = shopService.searchES(longitude, latitude, keyword, orderby, categoryId, tags);
 
-        //List<ShopModel> shopModelList = shopService.search(longitude, latitude, keyword, orderby, categoryId, tags);
+        List<ShopModel> shopModelList = (List<ShopModel>) result.get("shop");
 
         List<CategoryModel> categoryModelList = categoryService.selectAll();
 
-        List<Map<String, Object>> tagsAggregation = shopService.searchGroupByTags(keyword, categoryId, tags);
+        List<Map<String, Object>> tagsAggregation = (List<Map<String, Object>>) result.get("tags");
+
         Map<String, Object> resMap = new HashMap<>();
         resMap.put("shop", shopModelList);
         resMap.put("category", categoryModelList);
