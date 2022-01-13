@@ -30,7 +30,7 @@ import java.util.*;
  * @date: 2021/1/13 6:59 PM
  * Copyright © 2021 by Kidand
  */
-public class AlsRecallPredict {
+public class AlsRecallPredict implements Serializable {
     public static void main(String[] args) {
         // 初始化spark运行环境
         SparkSession spark = SparkSession.builder().master("local").appName("DianpingApp").getOrCreate();

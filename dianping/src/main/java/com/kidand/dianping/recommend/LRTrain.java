@@ -14,6 +14,7 @@ import org.apache.spark.sql.SparkSession;
 import org.apache.spark.sql.types.*;
 
 import java.io.IOException;
+import java.io.Serializable;
 
 /**
  * ██╗  ██╗██╗██████╗  █████╗ ███╗   ██╗██████╗
@@ -28,7 +29,7 @@ import java.io.IOException;
  * @date: 2021/1/13 8:36 PM
  * Copyright © 2021 by Kidand
  */
-public class LRTrain {
+public class LRTrain implements Serializable {
     public static void main(String[] args) throws IOException {
         // 初始化spark运行环境
         SparkSession spark = SparkSession.builder().master("local").appName("DianpingApp").getOrCreate();

@@ -8,6 +8,8 @@ import com.kidand.dianping.dal.ShopModelMapper;
 import com.kidand.dianping.model.CategoryModel;
 import com.kidand.dianping.model.SellerModel;
 import com.kidand.dianping.model.ShopModel;
+import com.kidand.dianping.recommend.RecommencSortService;
+import com.kidand.dianping.recommend.RecommendService;
 import com.kidand.dianping.service.CategoryService;
 import com.kidand.dianping.service.SellerService;
 import com.kidand.dianping.service.ShopService;
@@ -23,12 +25,19 @@ import javax.annotation.PostConstruct;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class ShopServiceImpl implements ShopService {
 
     @Autowired
     private ShopModelMapper shopModelMapper;
+
+    @Autowired
+    private RecommendService recommendService;
+
+    @Autowired
+    private RecommencSortService recommencSortService;
 
     @Autowired
     private CategoryService categoryService;
@@ -93,11 +102,20 @@ public class ShopServiceImpl implements ShopService {
 
     @Override
     public List<ShopModel> recommend(BigDecimal longitude, BigDecimal latitude) {
-        List<ShopModel> shopModelList = shopModelMapper.recommend(longitude, latitude);
-        shopModelList.forEach(shopModel -> {
-            shopModel.setSellerModel(sellerService.get(shopModel.getSellerId()));
-            shopModel.setCategoryModel(categoryService.get(shopModel.getCategoryId()));
-        });
+        List<Integer> shopIdList = recommendService.recall(148);
+        shopIdList = recommencSortService.sort(shopIdList, 148);
+        List<ShopModel> shopModelList = shopIdList.stream().map(id -> {
+            ShopModel shopModel = get(id);
+            shopModel.setIconUrl("/static/image/shopcover/xchg.jpg");
+            shopModel.setDistance(100);
+            return shopModel;
+        }).collect(Collectors.toList());
+
+//        List<ShopModel> shopModelList = shopModelMapper.recommend(longitude, latitude);
+//        shopModelList.forEach(shopModel -> {
+//            shopModel.setSellerModel(sellerService.get(shopModel.getSellerId()));
+//            shopModel.setCategoryModel(categoryService.get(shopModel.getCategoryId()));
+//        });
         return shopModelList;
     }
 
