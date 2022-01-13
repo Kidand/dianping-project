@@ -50,9 +50,13 @@ public class AlsRecall implements Serializable {
         ALS als = new ALS().setMaxIter(10).setRank(5).setRegParam(0.01)
                 .setUserCol("userId").setItemCol("shopId").setRatingCol("rating");
 
+        // 模型训练
         ALSModel alsModel = als.fit(trainingData);
 
         alsModel.save("file:///Users/Kidand/Desktop/dianping-project/data/alsmodel");
+
+        // 模型评测
+        alsModel.transform(testingData);
     }
 
     public static class Rating implements Serializable {
