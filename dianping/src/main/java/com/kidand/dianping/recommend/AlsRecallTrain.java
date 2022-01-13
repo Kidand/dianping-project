@@ -2,6 +2,7 @@ package com.kidand.dianping.recommend;
 
 import org.apache.spark.api.java.JavaRDD;
 import org.apache.spark.api.java.function.Function;
+import org.apache.spark.ml.evaluation.RegressionEvaluator;
 import org.apache.spark.ml.recommendation.ALS;
 import org.apache.spark.ml.recommendation.ALSModel;
 import org.apache.spark.sql.Dataset;
@@ -19,14 +20,15 @@ import java.io.Serializable;
  * ██║  ██╗██║██████╔╝██║  ██║██║ ╚████║██████╔╝
  * ╚═╝  ╚═╝╚═╝╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═══╝╚═════╝
  *
- * @description: AlsRecall
+ * @description: AlsRecall Asl召回算法训练
  * @author: Kidand
  * @date: 2021/1/13 15:15
  * Copyright © 2021 by Kidand
  */
-public class AlsRecall implements Serializable {
+public class AlsRecallTrain implements Serializable {
 
     public static void main(String[] args) throws IOException {
+        // System.setProperty("hadoop.home.dir", "/usr/local/Cellar/hadoop/3.3.1");
         // 初始化spark运行环境
         SparkSession spark = SparkSession.builder().master("local").appName("DianpingApp").getOrCreate();
         JavaRDD<String> csvFile = spark.read().textFile("file:///Users/Kidand/Desktop/dianping-project/data/behavior.csv").toJavaRDD();
@@ -53,10 +55,17 @@ public class AlsRecall implements Serializable {
         // 模型训练
         ALSModel alsModel = als.fit(trainingData);
 
-        alsModel.save("file:///Users/Kidand/Desktop/dianping-project/data/alsmodel");
-
         // 模型评测
-        alsModel.transform(testingData);
+        Dataset<Row> predictions = alsModel.transform(testingData);
+
+        // rmse 均方根误差
+        RegressionEvaluator evaluator = new RegressionEvaluator().setMetricName("rmse").setLabelCol("rating").setPredictionCol("predictiom");
+
+        double rmse = evaluator.evaluate(predictions);
+
+        System.out.println("rmse = " + rmse);
+
+        alsModel.save("file:///Users/Kidand/Desktop/dianping-project/data/alsmodel");
     }
 
     public static class Rating implements Serializable {
