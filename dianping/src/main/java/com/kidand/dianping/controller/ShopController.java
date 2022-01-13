@@ -30,7 +30,13 @@ public class ShopController {
     @Autowired
     private CategoryService categoryService;
 
-    //推荐服务V1.0
+    /**
+     * 推荐服务V1.0
+     * @param longitude
+     * @param latitude
+     * @return
+     * @throws BusinessException
+     */
     @RequestMapping("/recommend")
     @ResponseBody
     public CommonRes recommend(@RequestParam(name = "longitude") BigDecimal longitude,
@@ -43,7 +49,18 @@ public class ShopController {
         return CommonRes.create(shopModelist);
     }
 
-    //搜索服务V1.0
+    /**
+     * 搜索服务V1.0
+     * @param longitude
+     * @param latitude
+     * @param keyword
+     * @param orderby
+     * @param categoryId
+     * @param tags
+     * @return
+     * @throws BusinessException
+     * @throws IOException
+     */
     @RequestMapping("/search")
     @ResponseBody
     public CommonRes search(@RequestParam(name = "longitude") BigDecimal longitude,
