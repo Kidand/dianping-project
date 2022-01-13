@@ -29,3 +29,98 @@
 + 实现LR推荐排序算法
 + 结合万条数据完成个性化千人千面推荐功能
 
+## 项目结构
+
+```bash
+dianping-project
+├── LICENSE
+├── README.md
+├── SQL
+│   ├── ddl.sql
+│   └── dml.sql
+├── data
+│   ├── alsmodel
+│   ├── behavior.csv
+│   ├── dml.sql
+│   ├── feature.csv
+│   ├── featurevalue.csv
+│   └── lrmode
+└── dianping
+    ├── pom.xml
+    └── src
+        └── main
+            ├── java
+            │   └── com
+            │       └── kidand
+            │           └── dianping
+            │               ├── DianpingApplication.java
+            │               ├── common
+            │               │   ├── AdminPermission.java
+            │               │   ├── BusinessException.java
+            │               │   ├── CommonError.java
+            │               │   ├── CommonRes.java
+            │               │   ├── CommonUtil.java
+            │               │   ├── ControllerAspect.java
+            │               │   ├── EmBusinessError.java
+            │               │   └── GlobalExceptionHandler.java
+            │               ├── config
+            │               │   └── ElasticsearchRestClient.java
+            │               ├── controller
+            │               │   ├── CategoryController.java
+            │               │   ├── ShopController.java
+            │               │   ├── UserController.java
+            │               │   └── admin
+            │               │       ├── AdminController.java
+            │               │       ├── CategoryController.java
+            │               │       ├── SellerController.java
+            │               │       └── ShopController.java
+            │               ├── dal
+            │               │   ├── CategoryModelMapper.java
+            │               │   ├── RecommendDOMapper.java
+            │               │   ├── SellerModelMapper.java
+            │               │   ├── ShopModelMapper.java
+            │               │   └── UserModelMapper.java
+            │               ├── model
+            │               │   ├── CategoryModel.java
+            │               │   ├── RecommendDO.java
+            │               │   ├── SellerModel.java
+            │               │   ├── ShopModel.java
+            │               │   └── UserModel.java
+            │               ├── recommend
+            │               │   ├── AlsRecallPredict.java
+            │               │   ├── AlsRecallTrain.java
+            │               │   ├── LRTrain.java
+            │               │   ├── RecommencSortService.java
+            │               │   ├── RecommendService.java
+            │               │   └── ShopSortModel.java
+            │               ├── request
+            │               │   ├── CategoryCreateReq.java
+            │               │   ├── LoginReq.java
+            │               │   ├── PageQuery.java
+            │               │   ├── RegisterReq.java
+            │               │   ├── SellerCreateReq.java
+            │               │   └── ShopCreateReq.java
+            │               └── service
+            │                   ├── CategoryService.java
+            │                   ├── SellerService.java
+            │                   ├── ShopService.java
+            │                   ├── UserService.java
+            │                   └── impl
+            │                       ├── CategoryServiceImpl.java
+            │                       ├── SellerServiceImpl.java
+            │                       ├── ShopServiceImpl.java
+            │                       └── UserServiceImpl.java
+            └── resources
+                ├── application.properties
+                ├── mapping
+                │   ├── CategoryModelMapper.xml
+                │   ├── RecommendDOMapper.xml
+                │   ├── SellerModelMapper.xml
+                │   ├── ShopModelMapper.xml
+                │   └── UserModelMapper.xml
+                ├── mybatis-generator.xml
+                ├── static
+                └── templates
+
+```
+
